@@ -40,7 +40,9 @@ const Login = () => {
   const [dialogMsg, setDialogMsg] = useState("");
   const navigate = useNavigate();
 
-  const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleTextFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setFormValues({
       ...formValues,
@@ -57,7 +59,7 @@ const Login = () => {
     let passwordError: boolean = false;
 
     if (isTouched.username) {
-      if (formValues.username.length < 1 || formValues.username.length > 512) {
+      if (formValues.username.length < 4 || formValues.username.length > 256) {
         usernameError = true;
       }
     }
@@ -78,11 +80,13 @@ const Login = () => {
   const handleSubmit = async () => {
     if (isFormValid) {
       try {
-        const response = await fetch(`http://localhost:3001/users/${formValues.username}`);
-        if (response.status === 200) {
-          navigate("/");
+        const response = await fetch(`http://localhost:3001/users?username=${formValues.username}`);
+        const responseJson = await response.json();
+        console.log(responseJson);
+        if (response.status === 200 && responseJson.length !== 0) {
           localStorage.setItem("isLogged", "true");
-        } else if (response.status === 404) {
+          navigate("/");
+        } else if (response.status === 404 || responseJson.length === 0) {
           setDialogMsg("Invalid email or password");
           setOpen(true);
           throw new Error("User not found");
@@ -125,7 +129,10 @@ const Login = () => {
               error={isTouched.password && errors.password ? true : false}
               helperText={errors.password}
             />
-            <Button variant="outlined" onClick={handleSubmit} disabled={!isTouched.username && !isTouched.password}>
+            <Button
+              variant="outlined"
+              onClick={handleSubmit}
+              disabled={!isTouched.username && !isTouched.password}>
               Submit
             </Button>
           </FormGroup>

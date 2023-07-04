@@ -8,8 +8,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const isLogged = localStorage.getItem("isLogged") === "true";
 
-  console.log(isLogged);
-
   useEffect(() => {
     if (!isLogged) {
       navigate("/login");
