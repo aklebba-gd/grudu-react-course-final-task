@@ -9,7 +9,7 @@
     {
       "id": "2",
       "username": "carlanotarobot",
-      "fullname": "Carlanota Robot",
+      "fullname": "Carla Notarobot",
       "text": "Why use a debugger when you can fill your code with hundreds of <code>print()</code> statements?"
     },
     {
@@ -21,28 +21,28 @@
   ],
   "users": [
     {
-      "email": "Testmail@gmail.com",
-      "username": "testusernam",
-      "fullname": "testfullname",
-      "id": 2
-    },
-    {
-      "email": "test@test.com",
-      "username": "test",
-      "fullname": "testtest",
-      "id": 3
-    },
-    {
-      "email": "johnsmith@gma.com",
+      "email": "johnsmith@gmail.com",
       "username": "johnsmith",
-      "fullname": "Johny Smitherinio",
-      "id": 4
+      "fullname": "John Smith",
+      "id": "IJNS1q2w"
     },
     {
-      "email": "someemail@qwe.com",
-      "username": "Jusia",
-      "fullname": "Justin Kopytko",
-      "id": 5
+      "email": "carlanotarobot@hotmail.com",
+      "username": "carlanotarobot",
+      "fullname": "Carla Notarobot",
+      "id": "iasA8q1j"
+    },
+    {
+      "email": "ameliawarner@yahoo.com",
+      "username": "ameliawarner",
+      "fullname": "Amelia Warner",
+      "id": "j10Sls2s"
+    },
+    {
+      "email": "admin@admin.com",
+      "username": "Admin",
+      "fullname": "Admin User",
+      "id": "OADs37o"
     }
   ]
 }

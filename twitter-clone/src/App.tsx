@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import Signup from "./components/Signup";
 import ErrorPage from "./components/ErrorPage";
 import "./App.css";
+import { Container } from "@mui/material";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage />, errorElement: <ErrorPage /> },
@@ -14,7 +15,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="app">
-      <RouterProvider router={router} />
+      <Container id="app-container">
+        <RouterProvider router={router} />
+      </Container>
     </div>
   );
 }

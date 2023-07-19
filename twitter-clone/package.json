@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/joy": "^5.0.0-alpha.86",
     "@mui/material": "^5.13.6",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -13,7 +14,9 @@
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "dompurify": "^3.0.5",
     "email-validator": "^2.0.4",
+    "marked": "^5.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.45.1",
@@ -45,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.0.2",
+    "@types/marked": "^5.0.1"
   }
 }

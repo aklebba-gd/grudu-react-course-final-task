@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as EmailValidator from "email-validator";
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardContent,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  FormGroup,
-  TextField,
-} from "@mui/material";
+import { Button, Card, CardHeader, CardContent, FormGroup, TextField } from "@mui/material";
 import "./Signup.css";
+import CustomDialog from "../common/Dialog";
 
 interface FormValues {
   email: string;
@@ -46,14 +37,15 @@ const Signup = () => {
   const [isFormValid, setIsFormValid] = useState<Boolean>(false);
   const [open, setOpen] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+
+  const handleOpen = (value: boolean) => {
+    setOpen(value);
+  };
 
   const { email, password, username, fullname } = formValues;
 
-  const handleTextFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValues({
       ...formValues,
@@ -129,7 +121,7 @@ const Signup = () => {
           navigate("/");
         } else {
           setDialogMsg("Something went wrong");
-          setOpen(true);
+          handleOpen(true);
           throw new Error("Something went wrong");
         }
       } catch (error) {
@@ -201,18 +193,7 @@ const Signup = () => {
             </Button>
           </FormGroup>
         </form>
-        <Dialog
-          open={open}
-          onClose={() => setOpen(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{dialogMsg}</DialogTitle>
-          <DialogActions>
-            <Button onClick={() => setOpen(false)} autoFocus>
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <CustomDialog open={open} handleOpen={handleOpen} dialogMsg={dialogMsg} />
       </CardContent>
     </Card>
   );

@@ -11,6 +11,7 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
+import CustomDialog from "../common/Dialog";
 
 interface FormValues {
   username: string;
@@ -39,6 +40,10 @@ const Login = () => {
   const [open, setOpen] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
   const navigate = useNavigate();
+
+  const handleOpen = (value: boolean) => {
+    setOpen(value);
+  };
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -85,14 +90,15 @@ const Login = () => {
         console.log(responseJson);
         if (response.status === 200 && responseJson.length !== 0) {
           localStorage.setItem("isLogged", "true");
+          localStorage.setItem("username", formValues.username);
           navigate("/");
         } else if (response.status === 404 || responseJson.length === 0) {
           setDialogMsg("Invalid email or password");
-          setOpen(true);
+          handleOpen(true);
           throw new Error("User not found");
         } else {
           setDialogMsg("Something went wrong");
-          setOpen(true);
+          handleOpen(true);
           throw new Error("Something went wrong");
         }
       } catch (error) {
@@ -137,18 +143,7 @@ const Login = () => {
             </Button>
           </FormGroup>
         </form>
-        <Dialog
-          open={open}
-          onClose={() => setOpen(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{dialogMsg}</DialogTitle>
-          <DialogActions>
-            <Button onClick={() => setOpen(false)} autoFocus>
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <CustomDialog open={open} handleOpen={handleOpen} dialogMsg={dialogMsg} />
       </CardContent>
     </Card>
   );
