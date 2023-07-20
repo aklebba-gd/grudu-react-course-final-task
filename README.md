@@ -12,6 +12,8 @@ To run this project on your local machine:
 4. run `npm start` to start the app
 5. run `json-server --watch db.json --port 3001` to start database
 
+<strong>Make sure to run comends 3, 4 and 5 inside `twitter-clone` folder.</strong>
+
 That's it! Now it should be working.
 
 ## Additional information
