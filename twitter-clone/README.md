@@ -13,6 +13,6 @@ To run this project on your local machine:
 
 Now it should be working.
 
-## Worth to onte
+## Additional information
 
 While logging in only username is checked. Password is irrelevant.
