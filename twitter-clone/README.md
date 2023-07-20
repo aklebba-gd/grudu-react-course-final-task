@@ -12,3 +12,7 @@ To run this project on your local machine:
 4. run `json-server --watch db.json --port 3001` to start database
 
 Now it should be working.
+
+## Worth to onte
+
+While logging in only username is checked. Password is irrelevant.
