@@ -1,33 +1,20 @@
-import { FC, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Textarea from "@mui/joy/Textarea";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import "./SubmitTweet.css";
 import CustomDialog from "../common/Dialog";
 
 interface SubmitTweetProps {
   username: string | null;
+  fullname: string | null;
+  setNewTweet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SubmitTweet = (props: SubmitTweetProps): JSX.Element => {
-  const { username } = props;
+const SubmitTweet: React.FC<SubmitTweetProps> = (props: SubmitTweetProps): JSX.Element => {
+  const { username, fullname, setNewTweet } = props;
   const [tweet, setTweet] = useState<string>("");
-  const [users, setUsers] = useState<any[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [dialogMsg, setDialogMsg] = useState<string>("");
-  const [isTweetValid, setIsTweetValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    getUsers();
-  }, []);
-
-  const getUsers = async () => {
-    const response = await fetch("http://localhost:3001/users");
-    const tweets = await response.json();
-    setUsers(tweets);
-  };
-
-  const fullname = users?.find((user) => user?.username === username)?.fullname;
-  console.log(fullname);
 
   const handleOpen = (value: boolean) => {
     setOpen(value);
@@ -35,14 +22,12 @@ const SubmitTweet = (props: SubmitTweetProps): JSX.Element => {
 
   const handleTyping = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (tweet.length <= 140) {
-      setTweet(event.target.value);
+      setTweet(event.target.value.slice(0, 140));
     }
-    if (tweet.length > 0 && tweet.length <= 140) setIsTweetValid(true);
-    else setIsTweetValid(false);
   };
 
   const handleSubmit = async () => {
-    if (isTweetValid) {
+    if (tweet.length > 0 && tweet.length <= 140) {
       try {
         const response = await fetch("http://localhost:3001/tweets", {
           method: "POST",
@@ -58,6 +43,7 @@ const SubmitTweet = (props: SubmitTweetProps): JSX.Element => {
         console.log(response);
         if (response.ok) {
           setTweet("");
+          setNewTweet(true);
         } else {
           setDialogMsg("Something went wrong");
           handleOpen(true);
@@ -84,8 +70,15 @@ const SubmitTweet = (props: SubmitTweetProps): JSX.Element => {
           value={tweet}
         />
       </Grid>
+      <Box id="tweet-length-counter">
+        <Typography>{tweet.length} / 140</Typography>
+      </Box>
       <Grid item sx={{ alignSelf: "end" }}>
-        <Button variant="outlined" size="large" disabled={!isTweetValid} onClick={handleSubmit}>
+        <Button
+          variant="outlined"
+          size="large"
+          disabled={!(tweet.length > 0 && tweet.length <= 140)}
+          onClick={handleSubmit}>
           Tweet
         </Button>
       </Grid>

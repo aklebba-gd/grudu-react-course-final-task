@@ -1,17 +1,17 @@
-import { Box, Button, Paper, CardContent, Container, Typography, Grid } from "@mui/material";
+import { Button, Paper, Container, Typography, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 interface HeaderProps {
-  username: string | null;
+  fullname: string | null;
 }
 
-const Header = (props: HeaderProps): JSX.Element => {
+const Header: React.FC<HeaderProps> = (props: HeaderProps): JSX.Element => {
   const navigate = useNavigate();
-  const { username } = props;
+  const { fullname } = props;
   const handleLogOut = () => {
     localStorage.setItem("isLogged", "false");
-    navigate("/login");
+    navigate("/welcome");
   };
 
   return (
@@ -22,7 +22,7 @@ const Header = (props: HeaderProps): JSX.Element => {
             <Typography>Another Twitter Clone</Typography>
           </Grid>
           <Grid item className="log-out-section">
-            <Typography variant="h5">{username}</Typography>
+            <Typography variant="h5">{fullname}</Typography>
             <Button variant="outlined" size="large" id="log-out-button" onClick={handleLogOut}>
               Log Out
             </Button>

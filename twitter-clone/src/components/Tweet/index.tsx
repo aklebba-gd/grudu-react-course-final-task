@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { Card, CardContent, CardHeader, Grid, Paper, Typography } from "@mui/material";
 
+// To turn off some unnecesarry warnings in the console
 marked.use({
   mangle: false,
   headerIds: false,

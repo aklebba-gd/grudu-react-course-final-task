@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
 import Header from "../Header";
@@ -6,18 +6,30 @@ import Tweet from "../Tweet";
 import SubmitTweet from "../SubmitTweet";
 import "./HomePage.css";
 
-// useNavigate to redirect to login page if user is not logged
-
-const HomePage: FC = (): JSX.Element => {
+const HomePage: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [isLogged] = useState(localStorage.getItem("isLogged") === "true");
   const [username] = useState(localStorage.getItem("username"));
   const [tweets, setTweets] = useState<any[]>([]);
-  // const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [newTweet, setNewTweet] = useState(true);
+  const fullname = users?.find((user) => user?.username === username)?.fullname;
 
   useEffect(() => {
-    getTweets();
-    // getUsers();
+    if (!isLogged) {
+      navigate("/welcome");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (newTweet) {
+      getTweets();
+      setNewTweet(false);
+    }
+  }, [newTweet]);
+
+  useEffect(() => {
+    getUsers();
   }, []);
 
   const getTweets = async () => {
@@ -26,27 +38,16 @@ const HomePage: FC = (): JSX.Element => {
     setTweets(tweets);
   };
 
-  // const getUsers = async () => {
-  //   const response = await fetch("http://localhost:3001/users");
-  //   const tweets = await response.json();
-  //   setUsers(tweets);
-  // };
-
-  // console.log(tweets, users);
-
-  // const fullname = users?.find((user) => user?.username === username)?.fullname;
-  // console.log(fullname);
-
-  useEffect(() => {
-    if (!isLogged) {
-      navigate("/login");
-    }
-  }, []);
+  const getUsers = async () => {
+    const response = await fetch("http://localhost:3001/users");
+    const tweets = await response.json();
+    setUsers(tweets);
+  };
 
   return (
     <Container id="homepage-container">
-      <Header username={username} />
-      <SubmitTweet username={username} />
+      <Header fullname={fullname} />
+      <SubmitTweet username={username} fullname={fullname} setNewTweet={setNewTweet} />
       <Grid
         id="tweets-container"
         container
@@ -57,9 +58,11 @@ const HomePage: FC = (): JSX.Element => {
         alignItems="center"
         maxWidth="md">
         {tweets &&
-          tweets.map((tweet) => (
-            <Tweet key={tweet.id} fullname={tweet.fullname} tweetText={tweet.text} />
-          ))}
+          [...tweets]
+            .reverse()
+            .map((tweet) => (
+              <Tweet key={tweet.id} fullname={tweet.fullname} tweetText={tweet.text} />
+            ))}
       </Grid>
     </Container>
   );

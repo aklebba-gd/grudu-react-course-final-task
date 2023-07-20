@@ -1,7 +1,5 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { LinkHTMLAttributes } from "react";
-import "./ErrorPage.css";
 
 const ErrorPage = () => {
   return (

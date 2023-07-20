@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as EmailValidator from "email-validator";
 import { Button, Card, CardHeader, CardContent, FormGroup, TextField } from "@mui/material";
-import "./Signup.css";
 import CustomDialog from "../common/Dialog";
 
 interface FormValues {
@@ -118,7 +117,7 @@ const Signup = () => {
         });
         console.log(response);
         if (response.ok) {
-          navigate("/");
+          navigate("/login");
         } else {
           setDialogMsg("Something went wrong");
           handleOpen(true);
